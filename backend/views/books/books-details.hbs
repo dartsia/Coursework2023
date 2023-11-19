@@ -1,0 +1,49 @@
+<!-- Provider Details Section -->
+<section class="page-section" id="books-details">
+  <div class="container">
+    <h2 class="text-center mt-0">{{book.name}}</h2>
+    <hr class="divider my-4">
+
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">Author</th>
+            <th scope="col">Amount of pages</th>
+            <th scope="col">Edition</th>
+            <th scope="col">Publishing house</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{book.id}}</th>
+            <td>{{book.isbn}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.pages}}</td>
+            <td>{{book.edition}}</td>
+            <td>{{book.publishig_house}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row my-4">
+      <div class="col-sm-6">
+        <div class="card" text-center>
+          <div class="card-body">
+            <h5 class="card-title">Description</h5>
+            <p class="card-text">{{book.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row my-4">
+      <div class="col-sm-12 text-center">
+        <a class="btn btn-primary btn-lg " href="/books/borrow/{{id}}">Borrow this book</a>
+      </div>
+    </div>
+  </div>
+</section>

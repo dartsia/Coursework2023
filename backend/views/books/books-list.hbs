@@ -1,0 +1,59 @@
+<!-- Books List Section -->
+<section class="page-section" id="books-list">
+  <div class="container">
+    <h2 class="text-center mt-0">Available Books</h2>
+    <hr class="divider my-4">
+    <div class="table-responsive">
+      <a class="btn btn-primary my-2" href="/books/add-book/">Add New Book</a>
+      <table class="table table-hover table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">Author</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each books}}
+          <tr>
+            <th scope="row">{{id}}</th>
+            <td>{{isbn}}</td>
+            <td>{{author}}</td>
+            <td>{{name}}</td>
+            <td>
+
+              <a href="/books/info/{{id}}" class="btn btn-info btn-sm">More info...</a>
+              <a href="/books/borrow/{{id}}" class="btn btn-primary btn-sm">Borrow</a>
+
+              <!-- Modal Window - Confirmation -->
+              <!--<div id="my{{id}}" class="modal fade">
+                <div class="modal-dialog modal-confirm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="icon-box">
+                        <i class="material-icons">&#xE5CD;</i>
+                      </div>
+                      <h4 class="modal-title">Are you sure?</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Do you really want to delete this provider?<br>
+                        This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-info btn-md" data-dismiss="modal">Cancel</button>
+                      <a href="/providers/delete/{{id}}" type="button" class="btn btn-danger btn-md">Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </div>-->
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
