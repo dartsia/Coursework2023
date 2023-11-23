@@ -1,8 +1,18 @@
 //books controller
 
+const pool = require('../utils/database');
+
 const books = require('../models/books')
 
 module.exports.list = function(req,res) {
+    pool.query("SELECT * FROM books;", function(err, results, fields) {
+        if(err) throw err;
+    
+        fs.writeFile('booklist.json', JSON.stringify(results), function (err) {
+          if (err) throw err;
+          console.log('Saved!');
+        });
+    });
     res.render('books/books-list', { title: 'Booklist', books : books });
 }
 
