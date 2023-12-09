@@ -9,9 +9,12 @@ router.get('/', bookController.list);
 router.get('/info/:id', bookController.details);
 
 /* GET form to add book. */
-router.get('/books/add-book', bookController.addform);
+router.get('/add-book', bookController.addform);
 
 /* POST new book. */
-router.post('books/add-book/:id', bookController.add);
+router.post('/add-book', bookController.add);
+
+/* GET borrow book. */ 
+router.get('/borrow/:id', bookController.borrowBook);
 
 module.exports = router;

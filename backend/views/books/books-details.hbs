@@ -1,7 +1,7 @@
 <!-- Provider Details Section -->
 <section class="page-section" id="books-details">
   <div class="container">
-    <h2 class="text-center mt-0">{{book.name}}</h2>
+    <h2 class="text-center mt-0">{{book.Name}}</h2>
     <hr class="divider my-4">
 
     <div class="table-responsive">
@@ -18,12 +18,12 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">{{book.id}}</th>
-            <td>{{book.isbn}}</td>
-            <td>{{book.author}}</td>
-            <td>{{book.pages}}</td>
-            <td>{{book.edition}}</td>
-            <td>{{book.publishig_house}}</td>
+            <th scope="row">{{book.ID}}</th>
+            <td>{{book.ISBN}}</td>
+            <td>{{book.Author}}</td>
+            <td>{{book.PagesAmount}}</td>
+            <td>{{book.Edition}}</td>
+            <td>{{book.PublishingHouse}}</td>
           </tr>
         </tbody>
       </table>
@@ -34,7 +34,7 @@
         <div class="card" text-center>
           <div class="card-body">
             <h5 class="card-title">Description</h5>
-            <p class="card-text">{{book.description}}</p>
+            <p class="card-text">{{book.Description}}</p>
           </div>
         </div>
       </div>
@@ -42,7 +42,7 @@
 
     <div class="row my-4">
       <div class="col-sm-12 text-center">
-        <a class="btn btn-primary btn-lg " href="/books/borrow/{{id}}">Borrow this book</a>
+        <a href="/books/borrow/{{id}}" class="btn btn-primary btn-lg ">Borrow this book</a>
       </div>
     </div>
   </div>

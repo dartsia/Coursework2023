@@ -47,10 +47,39 @@
                 required>
             </div>
             
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Add Book</button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" href="/books/add-book/">Add Book</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 </section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const addBookForm = document.querySelector('#add-book-form form');
+
+    addBookForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(addBookForm);
+
+      fetch('/books/add-book/', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // виведення результату в консоль
+          if (data.success) {
+            window.location.href = '/books/success'; // Перенаправлення на сторінку успіху
+          } else {
+          alert('Помилка при додаванні книги');
+    }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Обробка помилки тут
+        });
+    });
+  });
+</script>

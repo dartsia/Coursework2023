@@ -4,36 +4,49 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const dotenv = require('dotenv');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const session = require('express-session');
 const auth = require('./utils/auth');
+const passport = require('passport');
 
 dotenv.config({path: '.env-local'});
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var booksRouter = require('./routes/books');
-var apiRouter = require('./api/routes/main.routes');
+//var apiRouter = require('./api/routes/main.routes');
 var profileRouter = require('./routes/profile.route');
 
 var app = express();
 
-auth.initialization(app);
+//auth.initialization(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
+//app.use(passport.Authenticator)
+// app.use(passport.initialize());
+// app.use(passport.session());
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/books', booksRouter);
-app.use('/api', apiRouter);
+//app.use('/api', apiRouter);
 app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler

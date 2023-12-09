@@ -16,16 +16,16 @@
           </tr>
         </thead>
         <tbody>
-          {{#each books}}
+          {{#each books as |book index|}}
           <tr>
-            <th scope="row">{{id}}</th>
-            <td>{{isbn}}</td>
-            <td>{{author}}</td>
-            <td>{{name}}</td>
+            <th scope="row">{{book.ID}}</th>
+            <td>{{book.ISBN}}</td>
+            <td>{{book.Author}}</td>
+            <td>{{book.Name}}</td>
             <td>
 
-              <a href="/books/info/{{id}}" class="btn btn-info btn-sm">More info...</a>
-              <a href="/books/borrow/{{id}}" class="btn btn-primary btn-sm">Borrow</a>
+              <a href="/books/info/{{book.ID}}" class="btn btn-info btn-sm">More info...</a>
+              <a href="/books/borrow/{{book.ID}}" class="btn btn-primary btn-sm">Borrow</a>
 
               <!-- Modal Window - Confirmation -->
               <!--<div id="my{{id}}" class="modal fade">
