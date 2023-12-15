@@ -6,21 +6,16 @@ var logger = require('morgan');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const auth = require('./utils/auth');
+//const auth = require('./utils/auth');
 const passport = require('passport');
 
 dotenv.config({path: '.env-local'});
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var booksRouter = require('./routes/books');
-//var apiRouter = require('./api/routes/main.routes');
-var profileRouter = require('./routes/profile.route');
 
 var app = express();
-
-//auth.initialization(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,10 +39,7 @@ app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/books', booksRouter);
-//app.use('/api', apiRouter);
-app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,48 +1,100 @@
 //main controller
 const usersModel = require("../models/users.models");
-const conn = require('../utils/database')
+const conn = require('../utils/database');
+const logValid = require('../validators/userValidator');
 
 module.exports.home = function(req,res) {
-    if (req.session.loggedin) {
-        res.render('index', { title: 'Express' });
-    } else {
-    // Not logged in
-        //res.send('Please login to view this page!');
-        res.redirect('/login');
-    }
-    res.end();
+    logValid.loginValidator(req,res);
+    res.render('index', { title: 'Booklover Heaven' });
 }
 
-module.exports.about = function(req,res) {
-    res.render('about');
+module.exports.myborrowed = function(req,res) {
+    //logValid.loginValidator(req,res);
+    const sql = "SELECT b.ID, b.ISBN, b.Author, b.Name\
+    FROM books b\
+    JOIN borrows bor ON b.ID = bor.id_book\
+    WHERE bor.id_user = ?;";
+    let idUser = parseInt(req.session.userid);
+    console.log(idUser);
+    conn.query(sql, idUser, function(err, data) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.render('my-borrowed', { title: 'Borrowed books', books : data });
+    });
 }
 
-module.exports.contact = function(req,res) {
-    res.render('contact');
+// module.exports.returnConfirm = function(req,res) {
+//     //logValid.loginValidator(req,res);
+//     idBook=req.params.id;
+//     res.render('confirm-return', { title: 'Confirm returning', bookid : idBook});
+// }
+
+module.exports.return = function(req,res) {
+    //logValid.loginValidator(req,res);
+    let userId = req.session.userid;
+    let bookId = req.params.id;
+    let sql = "DELETE FROM borrows WHERE id_user=? AND id_book=?";
+    conn.query(sql, [userId, bookId], function(err, data) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.redirect(303,'/borrowed-books');
+    });
+}
+
+module.exports.mybooks = function(req,res) {
+    //logValid.loginValidator(req,res);
+    const sql = "SELECT b.ID, b.ISBN, b.Author, b.Name, o.Verified\
+    FROM books b\
+    JOIN owners o ON b.ID = o.id_book\
+    WHERE o.id_user = ?;";
+    let idUser = parseInt(req.session.userid);
+    conn.query(sql, idUser, function(err, data) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.render('my-books', { title: 'My books', books : data });
+    });
+}
+
+module.exports.verify = function(req,res) {
+    const sql = "UPDATE owners SET Verified = 1 WHERE id_book=?;";
+    let idBook = parseInt(req.params.id);
+    conn.query(sql, idBook, function(err, data) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.redirect(303,'/my-books');
+    });
 }
 
 module.exports.login = function(req,res) {
     res.render('login');
 }
 
-module.exports.loginValid = async function(req,res) {
-    areValid = await usersModel.areValidCredentials(req.body.username, req.body.passw);
+// module.exports.loginValid = async function(req,res) {
+//     areValid = await usersModel.areValidCredentials(req.body.username, req.body.passw);
 
-    if (areValid) {
-        user = await model.read(req.body.username);
-        await req.login(user, function (err) { });
+//     if (areValid) {
+//         user = await model.read(req.body.username);
+//         await req.login(user, function (err) { });
 
-        if (req.user.role === "ADMIN") {
-            res.redirect("/profile/admin");
-        } else {
-            res.redirect("/profile/user");
-        }
-    } else {
-        res.render("login", {
-            errors: [{ msg: "Invalid credentials provided" }],
-        });
-    }
-}
+//         if (req.user.role === "ADMIN") {
+//             res.redirect("/profile/admin");
+//         } else {
+//             res.redirect("/profile/user");
+//         }
+//     } else {
+//         res.render("login", {
+//             errors: [{ msg: "Invalid credentials provided" }],
+//         });
+//     }
+// }
 
 module.exports.authlogin = function(req,res) {
     // Capture the input fields
@@ -59,6 +111,7 @@ module.exports.authlogin = function(req,res) {
 				// Authenticate the user
 				req.session.loggedin = true;
 				req.session.username = username;
+                req.session.userid = results[0].ID;
 				// Redirect to home page
 				res.redirect('/');
 			} else {
@@ -77,14 +130,29 @@ module.exports.registerform = function(req,res) {
 }
 
 module.exports.register = function(req,res) {
-    
-}
-
-module.exports.forgotpassword = function(req,res) {
-    res.render('forgot-password');
+    let user = {
+        username: req.body.username,
+        name: req.body.name,
+        age: req.body.age,
+        email: req.body.email,
+        password: req.body.password,
+        phone: BigInt(req.body.phone),
+        tgName: req.body.tgName,
+    }
+    console.log(user);
+    let sql = "INSERT INTO users (Username, Passw, Email, Age, Phone, telegramName, Name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    return conn.query(sql, [user.username, user.password, user.email, user.age, user.phone, user.tgName, user.name], 
+        (err, result) => {
+        if (err) throw err;if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.redirect('/login');
+    });
 }
 
 module.exports.logout = function(req,res) {
-    req.logOut();
+    req.session.loggedin=false;
     res.redirect("/login");
 }
+

@@ -17,4 +17,6 @@ router.post('/add-book', bookController.add);
 /* GET borrow book. */ 
 router.get('/borrow/:id', bookController.borrowBook);
 
+router.post('/borrow/:id', bookController.borrowed);
+
 module.exports = router;

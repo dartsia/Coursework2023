@@ -11,7 +11,7 @@
       <form action="/auth" method="post">
         <div class="form-group">
           <label for="inputUsername1">Username</label>
-          <input type="text" class="form-control" name="username" id="inputUsername1" aria-describedby="usernameHelp" required>
+          <input type="text" class="form-control" name="username" id="inputUsername1" required>
           <!--<small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
         </div>
         <div class="form-group">
@@ -19,14 +19,19 @@
           <input type="password" class="form-control" name="password" id="inputPassword1" required>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block" href="/auth">Submit</button>
+        <button id="submit" onclick="submitForm()" class="btn btn-primary btn-block" href="/auth">Submit</button>
         <hr class="divider my-4">
         <div class="text-center">
-          <a class="small" href="/forgot-password">Forgot Password?</a>
+          <a class="small" href="/register">Don't have an account? Register!</a>
         </div>
       </form>
     </div>
   </div>
-
+<script>
+  var button = document.getElementById('submit');
+  function submitForm(){
+    console.log('hello')
+  }
+</script>
 
 </section>
