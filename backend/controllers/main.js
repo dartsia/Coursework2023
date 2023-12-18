@@ -1,5 +1,4 @@
 //main controller
-const usersModel = require("../models/users.models");
 const conn = require('../utils/database');
 const logValid = require('../validators/userValidator');
 
@@ -15,7 +14,6 @@ module.exports.myborrowed = function(req,res) {
     JOIN borrows bor ON b.ID = bor.id_book\
     WHERE bor.id_user = ?;";
     let idUser = parseInt(req.session.userid);
-    console.log(idUser);
     conn.query(sql, idUser, function(err, data) {
         if (err) {
             console.error(err);
@@ -24,12 +22,6 @@ module.exports.myborrowed = function(req,res) {
         res.render('my-borrowed', { title: 'Borrowed books', books : data });
     });
 }
-
-// module.exports.returnConfirm = function(req,res) {
-//     //logValid.loginValidator(req,res);
-//     idBook=req.params.id;
-//     res.render('confirm-return', { title: 'Confirm returning', bookid : idBook});
-// }
 
 module.exports.return = function(req,res) {
     //logValid.loginValidator(req,res);
@@ -76,25 +68,6 @@ module.exports.verify = function(req,res) {
 module.exports.login = function(req,res) {
     res.render('login');
 }
-
-// module.exports.loginValid = async function(req,res) {
-//     areValid = await usersModel.areValidCredentials(req.body.username, req.body.passw);
-
-//     if (areValid) {
-//         user = await model.read(req.body.username);
-//         await req.login(user, function (err) { });
-
-//         if (req.user.role === "ADMIN") {
-//             res.redirect("/profile/admin");
-//         } else {
-//             res.redirect("/profile/user");
-//         }
-//     } else {
-//         res.render("login", {
-//             errors: [{ msg: "Invalid credentials provided" }],
-//         });
-//     }
-// }
 
 module.exports.authlogin = function(req,res) {
     // Capture the input fields

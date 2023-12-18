@@ -6,7 +6,6 @@ var logger = require('morgan');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-//const auth = require('./utils/auth');
 const passport = require('passport');
 
 dotenv.config({path: '.env-local'});
@@ -33,10 +32,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
-//app.use(passport.Authenticator)
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
