@@ -107,9 +107,10 @@ module.exports.add = function(req,res) {
 
 module.exports.borrowBook = function(req,res) {
     const sql = "SELECT o.id_book, o.id_user, u.Email, u.Phone, u.telegramName, u.Name\
-    FROM users u\
-    JOIN owners o ON u.ID = o.id_user\
-    WHERE o.id_book = ?;";
+    FROM owners o\
+    INNER JOIN users u ON o.id_user = u.ID\
+    LEFT JOIN borrows b ON o.id_book = b.id_book AND o.id_user = b.id_owner\
+    WHERE o.id_book = ? AND b.id_book IS NULL;";
     idBook = req.params.id;
     conn.query(sql, idBook, function(err, data) {
         if (err) {

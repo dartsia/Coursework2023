@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Returning Confirmation Page</title>
+</head>
+
+<body>
+  <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+    <div style="text-align: center;">
+      <h1>Are you sure?</h1>
+      <form action="/return/{{bookid}}" method="delete">
+            {{!-- <input type="hidden" name="bookId" id="inputBookId" value="{{bookid}}"> --}}
+            <button style="background-color: orange; color: white; padding: 10px 20px; font-size: 16px;" type="submit">
+                Return!
+            </button>
+        </form>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact list</title>
+    <style>
+        h1 {
+            margin-top: 50px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact List</h1>
+    {{#if contacts}}
+        <ul>
+            {{#each contacts as |contact index|}}
+                <li>
+                    <strong>{{contact.id_book}}</strong> -
+                    <strong>{{contact.Name}}</strong> :
+                    <strong>{{contact.Email}}</strong> -
+                    <strong>{{contact.Phone}}</strong> -
+                    <strong>{{contact.telegramName}}</strong> -
+                    <form action="/books/borrow/:id" method="post">
+                    <input type="hidden" name="inputBookId" id="inputBookId" value="{{contact.id_book}}">
+                    <input type="hidden" name="inputOwnerId" id="inputOwnerId" value="{{contact.id_user}}">
+                    <button type="submit">Borrow</button>
+                    </form>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+
+</body>
+</html>

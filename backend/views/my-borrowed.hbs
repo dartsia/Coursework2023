@@ -1,0 +1,43 @@
+<!-- Borrowed Books List Section -->
+<section class="page-section" id="books-list">
+  <div class="container">
+    <h2 class="text-center mt-0">Borrowed by me books</h2>
+    <hr class="divider my-4">
+    <div class="table-responsive">
+      <a class="btn btn-primary my-2" href="/books/">Search for a new book</a>
+      <table class="table table-hover table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">Author</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each books as |book index|}}
+          <tr>
+            <th scope="row">{{book.ID}}</th>
+            <td>{{book.ISBN}}</td>
+            <td>{{book.Author}}</td>
+            <td>{{book.Name}}</td>
+            <td>
+              <button style="background-color: orange; color: white; padding: 10px 20px; font-size: 16px;" onclick="deleteBook({{book.ID}})">
+                Return!
+               </button>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    function deleteBook(id) {
+      fetch('/return/' + id,  {
+        method: 'DELETE'
+      })
+    }
+  </script>
+</section>
